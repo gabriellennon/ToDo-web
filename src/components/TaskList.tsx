@@ -15,7 +15,6 @@ export function TaskList() {
   const [newTaskTitle, setNewTaskTitle] = useState('');
 
   function handleCreateNewTask() {
-    // Crie uma nova task com um id random, não permita criar caso o título seja vazio.
     if(newTaskTitle !== ''){
       const objectTask = {
         id: generateId(),
@@ -32,7 +31,16 @@ export function TaskList() {
   }
 
   function handleToggleTaskCompletion(id: number) {
-    // Altere entre `true` ou `false` o campo `isComplete` de uma task com dado ID
+    //Como temos estados imutáveis, criei uma cópia e modifiquei o booleano para depois setá-lo no nosso estado global
+    //We have imutable states, so i create a copy and modify the boolean to after change in the my global state
+    const allTasks = [...tasks];
+    allTasks.forEach((task) => {
+      if(task.id === id){
+        task.isComplete = !task.isComplete;
+      }
+    });
+
+    setTasks([...allTasks]);
   }
 
   function handleRemoveTask(id: number) {
