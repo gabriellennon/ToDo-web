@@ -16,6 +16,19 @@ export function TaskList() {
 
   function handleCreateNewTask() {
     // Crie uma nova task com um id random, não permita criar caso o título seja vazio.
+    if(newTaskTitle !== ''){
+      const objectTask = {
+        id: generateId(),
+        title: newTaskTitle,
+        isComplete: false,
+      }
+      setTasks((oldValue) => [
+        ...oldValue,
+        objectTask
+      ]);
+
+      setNewTaskTitle('');
+    }
   }
 
   function handleToggleTaskCompletion(id: number) {
@@ -24,6 +37,26 @@ export function TaskList() {
 
   function handleRemoveTask(id: number) {
     // Remova uma task da listagem pelo ID
+  }
+
+  function generateId(){
+    //Max number to o ID
+    //número máximo que o id pode atingir
+    const maxIdRangeNumber = Math.pow(10,10);
+    //Generate ID
+    let id = Math.floor(Math.random()* maxIdRangeNumber);
+
+    //Verify if existing equal ID
+    const taskWithSameId = tasks.find((task) => task.id === id);
+
+    //Gerar outro ID caso exista
+    //Generate other ID case existing
+    if(taskWithSameId){
+      id = generateId();
+    }
+
+    return id;
+
   }
 
   return (
